@@ -1,0 +1,26 @@
+ *  to store the information that is relevant and important for a time series made from a coded mask instrument. This includes
+import cern.colt.list.*;
+import cern.colt.list.DoubleArrayList;
+import cern.jet.stat.Descriptive;
+import hep.aida.IAnalysisFactory;
+import hep.aida.IAxis;
+import hep.aida.IHistogram1D;
+import hep.aida.IHistogramFactory;
+import hep.aida.ITree;
+import hep.aida.ref.histogram.Histogram1D;
+import jsky.coords.WorldCoords;
+import nom.tam.fits.BasicHDU;
+import nom.tam.fits.BinaryTable;
+import nom.tam.fits.BinaryTableHDU;
+import nom.tam.fits.Fits;
+import nom.tam.fits.FitsException;
+import nom.tam.fits.FitsFactory;
+import nom.tam.fits.Header;
+import nom.tam.fits.HeaderCard;
+import nom.tam.fits.HeaderCardException;
+import nom.tam.fits.TruncatedFileException;
+import nom.tam.util.ArrayFuncs;
+import nom.tam.util.BufferedDataInputStream;
+import nom.tam.util.BufferedDataOutputStream;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.log4j.Logger;
