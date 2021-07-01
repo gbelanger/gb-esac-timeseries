@@ -25,15 +25,15 @@ public class TimeSeries extends AbstractTimeSeries implements ITimeSeries {
     private static Logger logger = Logger.getLogger(TimeSeries.class);
     
     TimeSeries() {
-	super();
+    	super();
     }
 
     TimeSeries(TimeSeries ts) {
-	super(ts);
+    	super(ts);
     }
     
     TimeSeries(double tStart, double[] binEdges, double[] counts) {
-	super(tStart, binEdges, counts);
+    	super(tStart, binEdges, counts);
     }
     
     TimeSeries(double tStart, double[] binEdges, double[] rates, double[] errorsOnRates) {
@@ -42,10 +42,10 @@ public class TimeSeries extends AbstractTimeSeries implements ITimeSeries {
 
     //  Abstract methods in AbstractTimeSeries that requires implementation in each sub-class
     public double livetime() {
-	return this.sumOfBinWidths();
+    	return this.sumOfBinWidths();
     }
     public double exposureOnTarget() {
-	return this.sumOfBinWidths();
+    	return this.sumOfBinWidths();
     }
     
 }

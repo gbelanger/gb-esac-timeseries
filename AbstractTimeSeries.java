@@ -203,9 +203,9 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
     
     //  Setters
     void setBinEdges(double tStart, double[] binEdges) {
-	// binEdges are defined wrt tStart
-	binEdges = DataUtils.resetToZero(binEdges);
-	//
+    	// binEdges are defined wrt tStart
+    	binEdges = DataUtils.resetToZero(binEdges);
+    	//
         this.binEdges = new double[binEdges.length];
         this.leftBinEdges = new double[binEdges.length/2];
         this.rightBinEdges = new double[binEdges.length/2];
@@ -241,9 +241,9 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
         }
         this.minBinWidth = min;
         this.maxBinWidth = max;
-	this.sumOfBinWidths = sum;
-	logger.info("  Sum of bin widths = "+this.sumOfBinWidths);
-	this.avgBinWidth = sum/this.nBins;
+    	this.sumOfBinWidths = sum;
+    	logger.info("  Sum of bin widths = "+this.sumOfBinWidths);
+    	this.avgBinWidth = sum/this.nBins;
         //  Check if bin width is constant, excluding the last bin
         double[] widths = getBinWidths();
         double[] w = new double[widths.length-1];
@@ -359,7 +359,7 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
             }
         }
         this.nNonNaNs = nNonNaNs;
-	this.nNaNs = nNaNs;
+    	this.nNaNs = nNaNs;
         this.minRate = minRate;
         this.maxRate = maxRate;
         this.minBinHeight = minBinHeight;
@@ -391,7 +391,7 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
             this.binHeights[i] = counts;
             if ( Double.isNaN(rate) ) {
                 nNaNs++;
-		thereAreNaNs = true;
+        		thereAreNaNs = true;
                 thereAreGaps = true;
             }
             else {
@@ -410,7 +410,7 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
             logger.warn("There are "+nNaNs+" NaN values in the RATE column");
         }
         this.nNonNaNs = nNonNaNs;
-	this.nNaNs = nNaNs;
+    	this.nNaNs = nNaNs;
         this.minRate = minRate;
         this.maxRate = maxRate;
         this.minBinHeight = minBinHeight;
@@ -448,15 +448,14 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
         this.binCentreAtMinBinHeight = this.binCentres[DataUtils.getIndex(this.minBinHeight, this.binHeights)];
         this.binCentreAtMaxBinHeight = this.binCentres[DataUtils.getIndex(this.maxBinHeight, this.binHeights)];
         this.meanBinHeight = this.sumOfBinHeights/this.nNonNaNs;
-	if ( this.errorsAreSet ) {
-	    this.meanRate = this.sumOfRates/this.nNonNaNs;
-	    this.weightedMeanRate = Descriptive.weightedMean(new DoubleArrayList(this.rates), new DoubleArrayList(this.weightsOnRates));
-	}
-	else {
-	    this.meanRate = this.sumOfBinHeights/this.sumOfBinWidths;
-	    this.weightedMeanRate = this.meanRate;	    
-	}
-
+    	if ( this.errorsAreSet ) {
+    	    this.meanRate = this.sumOfRates/this.nNonNaNs;
+    	    this.weightedMeanRate = Descriptive.weightedMean(new DoubleArrayList(this.rates), new DoubleArrayList(this.weightsOnRates));
+    	}
+    	else {
+    	    this.meanRate = this.sumOfBinHeights/this.sumOfBinWidths;
+    	    this.weightedMeanRate = this.meanRate;	    
+    	}
         this.varianceInBinHeights = Descriptive.sampleVariance(this.nNonNaNs, this.sumOfBinHeights, this.sumOfSquaredBinHeights);
         this.varianceInRates = Descriptive.sampleVariance(this.nNonNaNs, this.sumOfRates, this.sumOfSquaredRates);
         this.errorOnMeanRate = Math.sqrt(this.varianceInRates/this.nNonNaNs);
@@ -478,200 +477,200 @@ public abstract class AbstractTimeSeries implements ITimeSeries {
     //// Target Name
     public void setTargetName(String targetName) {
         this.targetName = targetName;
-	this.targetNameIsSet = true;
+    	this.targetNameIsSet = true;
     }
     public String targetName() {
-	if ( !this.targetNameIsSet ) {
-	    logger.warn("Target name is not defined: Returning empty string");
-	}
-	return new String(this.targetName);
+    	if ( !this.targetNameIsSet ) {
+    	    logger.warn("Target name is not defined: Returning empty string");
+    	}
+    	return new String(this.targetName);
     }
     public boolean targetNameIsSet() {
-	return this.targetNameIsSet;
+    	return this.targetNameIsSet;
     }
 
     ////  Target RA, Dec
     public void setTargetRaDec(double ra, double dec) {
-	this.targetRA = ra;
-	this.targetDec = dec;
-	this.targetRaDec = new Point2D.Double(ra, dec);
-	this.targetRaDecAreSet = true;
+    	this.targetRA = ra;
+    	this.targetDec = dec;
+    	this.targetRaDec = new Point2D.Double(ra, dec);
+    	this.targetRaDecAreSet = true;
     }
     public void setTargetRaDec(Point2D.Double raDec) {
-	setTargetRaDec(raDec.getX(), raDec.getY());
+    	setTargetRaDec(raDec.getX(), raDec.getY());
     }
     public void setTargetRaDec(double[] raDec) {
-	setTargetRaDec(raDec[0], raDec[1]);
+    	setTargetRaDec(raDec[0], raDec[1]);
     }
     public double targetRA() {
-	if ( !this.targetRaDecAreSet ) {
-	    logger.warn("Target RA, Dec are not defined: Returning Double.NaN");
-	}
-	return this.targetRA;
+    	if ( !this.targetRaDecAreSet ) {
+    	    logger.warn("Target RA, Dec are not defined: Returning Double.NaN");
+    	}
+    	return this.targetRA;
     }
     public double targetDec() {
-	if ( !this.targetRaDecAreSet ) {
-	    logger.warn("Target RA, Dec are not defined: Returning Double.NaN");
-	}
-	return this.targetDec;
+    	if ( !this.targetRaDecAreSet ) {
+    	    logger.warn("Target RA, Dec are not defined: Returning Double.NaN");
+    	}
+    	return this.targetDec;
     }
     public Point2D.Double targetRaDec() {
-	if ( !this.targetRaDecAreSet ) {
-	    logger.warn("Target RA, Dec are not defined: Returning null object");
-	}
-	return this.targetRaDec;
+    	if ( !this.targetRaDecAreSet ) {
+    	    logger.warn("Target RA, Dec are not defined: Returning null object");
+    	}
+    	return this.targetRaDec;
     }
     public boolean targetRaDecAreSet() {
-	return this.targetRaDecAreSet;
+    	return this.targetRaDecAreSet;
     }
 
     ////  Energy range
     public void setEnergyRange(double eMin, double eMax) {
-	this.energyRangeMin = eMin;
-	this.energyRangeMax = eMax;
-	this.energyRange = new Point2D.Double(eMin, eMax);
-	this.energyRangeIsSet = true;
+    	this.energyRangeMin = eMin;
+    	this.energyRangeMax = eMax;
+    	this.energyRange = new Point2D.Double(eMin, eMax);
+    	this.energyRangeIsSet = true;
     }
     public void setEnergyRange(Point2D.Double eMinMax) {
-	setEnergyRange(eMinMax.getX(), eMinMax.getY());
+        setEnergyRange(eMinMax.getX(), eMinMax.getY());
     }
     public void setEnergyRange(double[] eMinMax) {
-	setEnergyRange(eMinMax[0], eMinMax[1]);
+    	setEnergyRange(eMinMax[0], eMinMax[1]);
     }
     public double energyRangeMin() {
-	if ( !this.energyRangeIsSet ) {
-	    logger.warn("Energy range is not defined: Returning Double.NaN");
-	}
-	return this.energyRangeMin;
+    	if ( !this.energyRangeIsSet ) {
+    	    logger.warn("Energy range is not defined: Returning Double.NaN");
+    	}
+    	return this.energyRangeMin;
     }
     public double energyRangeMax() {
-	if ( !this.energyRangeIsSet ) {
-	    logger.warn("Energy range is not defined: Returning Double.NaN");
-	}
-	return this.energyRangeMax;
+    	if ( !this.energyRangeIsSet ) {
+    	    logger.warn("Energy range is not defined: Returning Double.NaN");
+    	}
+    	return this.energyRangeMax;
     }
     public Point2D.Double energyRange() {
-	if ( !this.energyRangeIsSet ) {
-	    logger.warn("Energy range is not defined: Returning Double.NaN");
-	}
-	return (Point2D.Double)energyRange.clone();
+    	if ( !this.energyRangeIsSet ) {
+    	    logger.warn("Energy range is not defined: Returning Double.NaN");
+    	}
+    	return (Point2D.Double)energyRange.clone();
     }
 
     ////  Time unit
     public String timeUnit() {
-	return new String(this.timeUnit);
+    	return new String(this.timeUnit);
     }
 
     ////  Telescope
     public void setTelescope(String telescope) {
         this.telescope = telescope;
-	this.telescopeIsSet = true;
+    	this.telescopeIsSet = true;
     }
     public String telescope() {
-	if ( !this.telescopeIsSet ) {
-	    logger.warn("Telescope is not defined: Returning empty string");
-	}
-	return new String(this.telescope);
+    	if ( !this.telescopeIsSet ) {
+    	    logger.warn("Telescope is not defined: Returning empty string");
+    	}
+    	return new String(this.telescope);
     }
     public boolean telescopeIsSet() {
-	return this.telescopeIsSet;
+    	return this.telescopeIsSet;
     }
 
     ////  Instrument
     public void setInstrument(String instrument) {
         this.instrument = instrument;
-	this.instrumentIsSet = true;
-    }
-    public String instrument() {
-	if ( !this.instrumentIsSet ) {
-	    logger.warn("Instrument is not defined: Returning empty string");
-	}
-	return new String(this.instrument);	    
+    	this.instrumentIsSet = true;
+        }
+        public String instrument() {
+    	if ( !this.instrumentIsSet ) {
+    	    logger.warn("Instrument is not defined: Returning empty string");
+    	}
+    	return new String(this.instrument);	    
     }
     public boolean instrumentIsSet() {
-	return this.instrumentIsSet;
+    	return this.instrumentIsSet;
     }
 
     ////  Mjdref
     public void setMJDref(double mjdref) {
         this.mjdref = mjdref;
-	this.mjdrefIsSet = true;
+    	this.mjdrefIsSet = true;
     }
     public double mjdref() {
-	if ( !this.mjdrefIsSet ) {
-	    logger.warn("MJD ref is not defined: Returning Double.NaN");
-	}
-	return this.mjdref;
+    	if ( !this.mjdrefIsSet ) {
+    	    logger.warn("MJD ref is not defined: Returning Double.NaN");
+    	}
+    	return this.mjdref;
     }
     public boolean mjdrefIsSet() {
-	return this.mjdrefIsSet;
+    	return this.mjdrefIsSet;
     }
 
     ////  Dates and times of observations
     public void setDateObsEnd(String dateObs, String dateEnd) {
-	this.dateObs = new String(dateObs);
-	this.dateEnd = new String(dateEnd);
-	this.dateObsEndAreSet = true;
+    	this.dateObs = new String(dateObs);
+    	this.dateEnd = new String(dateEnd);
+    	this.dateObsEndAreSet = true;
     }
     public void setTimeObsEnd(String timeObs, String timeEnd) {
-	this.timeObs = new String(timeObs);
-	this.timeEnd = new String(timeEnd);
-	this.timeObsEndAreSet = true;
+    	this.timeObs = new String(timeObs);
+    	this.timeEnd = new String(timeEnd);
+    	this.timeObsEndAreSet = true;
     }
     ////  DATE-OBS and DATE-END
     public String dateObs() {
-	if ( !this.dateObsEndAreSet ) {
-	    logger.warn("DATE-OBS and DATE-END are not set: Returning empty string");
-	}
-	return this.dateObs;
+    	if ( !this.dateObsEndAreSet ) {
+    	    logger.warn("DATE-OBS and DATE-END are not set: Returning empty string");
+    	}
+    	return this.dateObs;
     }
     public String dateEnd() {
-	if ( !this.dateObsEndAreSet ) {
-	    logger.warn("DATE-OBS and DATE-END are not set: Returning empty string");
-	}
-	return this.dateEnd;
+    	if ( !this.dateObsEndAreSet ) {
+    	    logger.warn("DATE-OBS and DATE-END are not set: Returning empty string");
+    	}
+    	return this.dateEnd;
     }
     public String[] dateObsEnd() {
-	if ( !this.dateObsEndAreSet ) {
-	    logger.warn("DATE-OBS and DATE-END are not set: Returning empty strings");
-	}
-	return new String[] {new String(this.dateObs), new String(this.dateEnd)};
+    	if ( !this.dateObsEndAreSet ) {
+    	    logger.warn("DATE-OBS and DATE-END are not set: Returning empty strings");
+    	}
+    	return new String[] {new String(this.dateObs), new String(this.dateEnd)};
     }
     ////  TIME-OBS and TIME-END
     public String timeObs() {
-	if ( !this.timeObsEndAreSet ) {
-	    logger.warn("TIME-OBS and TIME-END are not set: Returning empty string");
-	}
-	return this.timeObs;
+    	if ( !this.timeObsEndAreSet ) {
+    	    logger.warn("TIME-OBS and TIME-END are not set: Returning empty string");
+    	}
+    	return this.timeObs;
     }
     public String timeEnd() {
-	if ( !this.timeObsEndAreSet ) {
-	    logger.warn("TIME-OBS and TIME-END are not set: Returning empty string");
-	}
-	return this.timeEnd;
+    	if ( !this.timeObsEndAreSet ) {
+    	    logger.warn("TIME-OBS and TIME-END are not set: Returning empty string");
+    	}
+    	return this.timeEnd;
     }
     public String[] timeObsEnd() {
-	if ( !this.timeObsEndAreSet ) {
-	    logger.warn("TIME-OBS and TIME-END are not set: Returning empty strings");
-	}
-	return new String[] {new String(this.timeObs), new String(this.timeEnd)};
+    	if ( !this.timeObsEndAreSet ) {
+    	    logger.warn("TIME-OBS and TIME-END are not set: Returning empty strings");
+    	}
+    	return new String[] {new String(this.timeObs), new String(this.timeEnd)};
     }
 
     ////  Time error
     // setters
     public void setRelTimeError(double relTimeError) {
-	this.relTimeError = relTimeError;
-	this.relTimeErrorIsSet = true;
+    	this.relTimeError = relTimeError;
+    	this.relTimeErrorIsSet = true;
     }
     public void setAbsTimeError(double absTimeError) {
-	this.absTimeError = absTimeError;
-	this.absTimeErrorIsSet = true;
+    	this.absTimeError = absTimeError;
+    	this.absTimeErrorIsSet = true;
     }
     public void setTimeErrors(double relTimeError, double absTimeError) {
-	this.relTimeError = relTimeError;
-	this.relTimeErrorIsSet = true;
-	this.absTimeError = absTimeError;
-	this.absTimeErrorIsSet = true;
+    	this.relTimeError = relTimeError;
+    	this.relTimeErrorIsSet = true;
+    	this.absTimeError = absTimeError;
+    	this.absTimeErrorIsSet = true;
     }
 
     // getters
